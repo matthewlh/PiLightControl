@@ -72,7 +72,7 @@
         android:text="Auto Reconnect"
         android:paddingTop="@dimen/activity_vertical_margin"
         android:paddingBottom="@dimen/activity_vertical_margin"
-        android:id="@+id/switch1" />
+        android:id="@+id/autoReconnectSwitch" />
 
 
 </LinearLayout>

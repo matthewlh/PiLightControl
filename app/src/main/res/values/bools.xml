@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <bool name="saved_connected_default">false</bool>
+    <bool name="saved_auto_reconnect_default">false</bool>
+</resources>
