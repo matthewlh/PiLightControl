@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Pi Light Control</string>
+    <string name="Connect">Connect</string>
+    <string name="Disconnect">Disconnect</string>
+    <string name="Address">Address</string>
+    <string name="Port">Port</string>
+    <string name="Brightness">Brightness</string>
+    <string name="Server">Server</string>
 </resources>
