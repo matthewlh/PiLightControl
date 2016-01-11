@@ -1,7 +1,9 @@
+#!/usr/bin/env python
+
 import time
 import Server
 
-Server.connect('192.168.1.1', 2016)
+Server.connect('wlan0', 2000)
 
 while True:
 	
