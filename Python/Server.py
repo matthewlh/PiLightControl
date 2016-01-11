@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import socket
 import sys
 import thread
@@ -16,11 +18,12 @@ def setVerbose(newVerbose):
 	global verbose
 	verbose = newVerbose
 
-def connect(ip, port):
+def connect(ethNum, port):
 	global server_address, sock
 	try:
 		sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+		ip = ni.ifaddresses(ethNum)[2][0]['addr']
 
 		server_address = (ip, port)
 		sock.bind(server_address)
