@@ -2,8 +2,10 @@ package matthew.pilightcontrol;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,6 +13,12 @@ import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.net.UnknownHostException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private Button connectButton;
     private Switch autoReconnectSwitch;
 
+    TCPClient mTcpClient;
     private boolean connected;
     private boolean auto_reconnect;
 
@@ -159,17 +168,65 @@ public class MainActivity extends AppCompatActivity {
     // update the brightnessTextView based on brightnessSeekBar's value
     protected void updateBrightnessTextView()
     {
+        if( mTcpClient != null) {
+            mTcpClient.sendMessage(String.format("Brightness: %3d%%", brightnessSeekBar.getProgress()));
+        }
+
         brightnessTextView.setText(String.format("Brightness: %3d%%", brightnessSeekBar.getProgress()));
     }
 
     private void tryConnect() {
-        //TODO: implement connection stuff
-        //for now, assume we 'connected'
-        connected = true;
+
+        String port = portEditText.getText().toString();
+
+        try {
+            // check if the port is parsable, although we will still pass it along as a string
+            Integer.parseInt(port);
+
+            new connectTask().execute(addressEditText.getText().toString(), port);
+
+            //TODO: check if we actually got connected
+            connected = true;
+        }
+        catch (NumberFormatException e) {
+            Toast.makeText(getApplicationContext(), "Invalid Port Number!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void disconnect() {
-        //TODO: implement connection stuff
         connected = false;
+
+        mTcpClient.stopClient();
+        Toast.makeText(getApplicationContext(), "Disconnected", Toast.LENGTH_SHORT).show();
+
+    }
+
+    public class connectTask extends AsyncTask<String,String,TCPClient> {
+
+        @Override
+        protected TCPClient doInBackground(String... args) {
+
+            //we create a TCPClient object and
+            mTcpClient = new TCPClient(new TCPClient.OnMessageReceived() {
+                @Override
+                //here the messageReceived method is implemented
+                public void messageReceived(String message) {
+                    //this method calls the onProgressUpdate
+                    publishProgress(message);
+                }
+            }, args[0], Integer.parseInt(args[1]));
+
+            mTcpClient.run();
+
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+            super.onProgressUpdate(values);
+
+            //Toast the message from the server
+            Toast.makeText(getApplicationContext(), "Server: " + values[0], Toast.LENGTH_SHORT).show();
+        }
     }
 }
