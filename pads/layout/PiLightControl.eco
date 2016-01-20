@@ -1,0 +1,14 @@
+*PADS-ECO-V9.4-MILS*
+
+*REMARK* -- PiLightControl.pcb -- Wed Jan 20 02:11:37 2016
+
+
+*PART*
+X1 MTHOLE2
+
+*SET_ATTRIBUTE* PARTTYPE MTHOLE2
+"Description" MOUNTING HOLE 200 MIL ROUND
+"Cost" 
+"Part Number" MTHOLE2
+"Manufacturer #1" 
+*END*
