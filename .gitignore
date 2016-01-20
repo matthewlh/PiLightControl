@@ -1,8 +1,12 @@
+## Android Studio
 *.iml
 .gradle
-/local.properties
-/.idea/workspace.xml
-/.idea/libraries
+/PiLightControl_App/local.properties
+/PiLightControl_App/.idea/workspace.xml
+/PiLightControl_App/.idea/libraries
 .DS_Store
-/build
-/captures
+/PiLightControl_App/build
+/PiLightControl_App/captures
+
+## Python
+*.pyc
