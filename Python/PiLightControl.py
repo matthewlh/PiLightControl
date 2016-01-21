@@ -3,7 +3,6 @@
 import time
 import Server
 
-
 Server.connect('wlan0', 2000)
 
 while True:
